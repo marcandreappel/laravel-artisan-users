@@ -3,6 +3,7 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-artisan-users/laravel-artisan-users.svg?style=for-the-badge&logo=composer)](https://packagist.org/packages/marcandreappel/laravel-artisan-users)
 [![Build Status](https://img.shields.io/travis/laravel-artisan-users/laravel-artisan-users/master.svg?style=for-the-badge&logo=travis)](https://travis-ci.org/marcandreappel/laravel-artisan-users)
 [![Quality Score](https://img.shields.io/scrutinizer/g/laravel-artisan-users/laravel-artisan-users.svg?style=for-the-badge&logo=scrutinizerci)](https://scrutinizer-ci.com/g/marcandreappel/laravel-artisan-users)
+<!--[![Total Downloads](https://img.shields.io/packagist/dt/laravel-artisan-users/laravel-artisan-users.svg?style=flat-square)](https://packagist.org/packages/marcandreappel/laravel-artisan-users)-->
 
 <!--[![Total Downloads](https://img.shields.io/packagist/dt/laravel-artisan-users/laravel-artisan-users.svg?style=flat-square)](https://packagist.org/packages/marcandreappel/laravel-artisan-users)-->
 
