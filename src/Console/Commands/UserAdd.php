@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MarcAndreAppel\ArtisanUsers\Console\Commands;
@@ -6,33 +7,23 @@ namespace MarcAndreAppel\ArtisanUsers\Console\Commands;
 use Illuminate\Console\Command;
 use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
 
+/**
+ * Class UserAdd.
+ */
 class UserAdd extends Command
 {
 
-    /**
-     * @var string 
-     */
+    /** @var string */
     protected $signature = 'user:add
                             {--r|role : Whether a role needs to defined}';
 
-    /**
-     * @var string 
-     */
+    /** @var string */
     protected $description = "Create a new user";
 
-    /**
-     * @var string $userModel
-     */
-    private string $userModel;
-
-    /**
-     * @var bool $withRoles
-     */
+    /** @var bool $withRoles */
     private bool $withRoles;
 
-    /**
-     * @return void
-     */
+    /** @return void */
     public function __construct()
     {
         parent::__construct();
@@ -40,9 +31,7 @@ class UserAdd extends Command
         $this->withRoles = config('artisan_users.with_roles');
     }
 
-    /**
-     * @return mixed
-     */
+    /** @return mixed */
     public function handle()
     {
         $values = collect(
@@ -55,7 +44,8 @@ class UserAdd extends Command
 
         if ($this->option('role') && $this->withRoles) {
             $values->put(
-                'role', $this->choice(
+                'role',
+                $this->choice(
                     "Role",
                     [
                     'user'  => "Standard User",
@@ -66,12 +56,10 @@ class UserAdd extends Command
             );
         }
 
-        if ((new ArtisanUsers)->createUser($values)) {
+        if ((new ArtisanUsers())->createUser($values)) {
             $this->info("User was successfully created");
         } else {
             $this->error("User creation has failed");
         }
-
     }
-
 }

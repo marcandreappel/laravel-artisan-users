@@ -1,7 +1,4 @@
 <?php
-/**
- * This class handles all action related to commands, existing and future
- */
 
 declare(strict_types=1);
 
@@ -13,9 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use PDOException;
 
 /**
- * Class ArtisanUsers
- *
- * @package MarcAndreAppel\ArtisanUsers
+ * Class ArtisanUsers.
  */
 class ArtisanUsers
 {
@@ -40,7 +35,7 @@ class ArtisanUsers
     }
 
     /**
-     * @param Collection $values
+     * @param Collection<string> $values
      *
      * @return bool
      */
@@ -49,7 +44,7 @@ class ArtisanUsers
         /**
          * @var Model $user
         */
-        $user = new $this->user;
+        $user = new $this->user();
 
         $user->name     = $values->get('name');
         $user->email    = $values->get('email');
@@ -65,5 +60,4 @@ class ArtisanUsers
             return false;
         }
     }
-
 }
