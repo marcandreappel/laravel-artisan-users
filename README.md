@@ -4,6 +4,7 @@
 ![Travis build status](https://img.shields.io/travis/marcandreappel/laravel-artisan-users?logo=travis-ci&logoColor=%23fff&style=for-the-badge)
 ![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/marcandreappel/laravel-artisan-users/main?logo=scrutinizer&style=for-the-badge)
 ![Scrutinizer coverage](https://img.shields.io/scrutinizer/coverage/g/marcandreappel/laravel-artisan-users/main?logo=scrutinizer&style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/marcandreappel/laravel-artisan-users?logo=github&style=for-the-badge)
 ![Packagist Downloads](https://img.shields.io/packagist/dt/marcandreappel/laravel-artisan-users?logo=laravel&logoColor=%23fff&style=for-the-badge)
 
 A collection of Laravel `artisan` commands to manage users on the cli.
