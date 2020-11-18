@@ -41,20 +41,23 @@ class UserAdd extends Command
             'password' => $this->secret("Password"),
             ]
         );
+        if ($this->withRoles) {
+            $values->put('role', 'user');
+        }
 
         if ($this->option('role') && $this->withRoles) {
-            $values->put(
-                'role',
-                $this->choice(
-                    "Role",
-                    [
-                    'user'  => "Standard User",
-                    'admin' => "Administrator",
-                    ],
-                    'user'
-                )
-            );
-        }
+                $values->put(
+                    'role',
+                    $this->choice(
+                        "Role",
+                        [
+                            'user'  => "Standard User",
+                            'admin' => "Administrator",
+                        ],
+                        'user'
+                    )
+                );
+            }
 
         if ((new ArtisanUsers())->createUser($values)) {
             $this->info("User was successfully created");
