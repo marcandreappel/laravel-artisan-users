@@ -86,4 +86,27 @@ class UserAddTest extends TestCase
             ->expectsOutput("User creation has failed");
     }
 
+    /** @test */
+    public function adds_default_role_when_roles_active_but_not_asked()
+    {
+        $this->migrateFreshUsing();
+
+        $presets = [
+            'name'     => $this->faker->name,
+            'email'    => $this->faker->email,
+            'role'     => 'user',
+            'password' => $this->faker->password,
+        ];
+
+        Config::set('artisan_users.use_model', User::class);
+        Config::set('artisan_users.with_roles', true);
+
+        $this->artisan('user:add')
+            ->expectsQuestion('First and last name', $presets['name'])
+            ->expectsQuestion('Email address', $presets['email'])
+            ->expectsQuestion('Password', $presets['password'])
+            ->assertExitCode(0);
+
+        $this->assertDatabaseHas('users', ['email' => $presets['email'], 'role' => $presets['role']]);
+    }
 }
