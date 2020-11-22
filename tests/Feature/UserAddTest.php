@@ -1,14 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MarcAndreAppel\ArtisanUsers\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
+use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
 use MarcAndreAppel\ArtisanUsers\Tests\App\User;
 use MarcAndreAppel\ArtisanUsers\Tests\TestCase;
 
+/**
+ * Class UserAddTest
+ *
+ * @package MarcAndreAppel\ArtisanUsers\Tests\Feature
+ */
 class UserAddTest extends TestCase
 {
 
@@ -49,7 +55,7 @@ class UserAddTest extends TestCase
 
         Config::set('artisan_users.use_model', User::class);
 
-        (new ArtisanUsers)->createUser($values);
+        ArtisanUsers::createUser($values);
 
         $this->assertDatabaseHas('users', ['email' => $values->get('email')]);
 
