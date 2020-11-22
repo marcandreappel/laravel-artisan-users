@@ -6,6 +6,7 @@ namespace MarcAndreAppel\ArtisanUsers;
 
 use Illuminate\Support\ServiceProvider;
 use MarcAndreAppel\ArtisanUsers\Console\Commands\UserAdd;
+use MarcAndreAppel\ArtisanUsers\Console\Commands\UserEdit;
 
 /**
  * Class ArtisanUsersServiceProvider.
@@ -31,7 +32,10 @@ class ArtisanUsersServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/artisan_users.php', 'artisan_users');
 
         if ($this->app->runningInConsole()) {
-            $this->commands([UserAdd::class]);
+            $this->commands([
+                UserAdd::class,
+                UserEdit::class,
+            ]);
         }
     }
 }
