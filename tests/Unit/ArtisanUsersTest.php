@@ -77,27 +77,4 @@ class ArtisanUsersTest extends TestCase
         $this->assertFalse($result);
     }
 
-    /**
-     * @test
-     */
-    public function adds_user_with_role()
-    {
-        $this->migrateFreshUsing();
-
-        Config::set('artisan_users.use_model', User::class);
-        Config::set('artisan_users.with_roles', true);
-
-        $values = collect([
-            'name'     => $this->faker->name,
-            'email'    => $this->faker->email,
-            'role'     => 'admin',
-            'password' => $this->faker->password,
-        ]);
-
-
-        $user = (new ArtisanUsers)->createUser($values);
-
-        $this->assertTrue($user);
-        $this->assertDatabaseHas('users', $values->except('password')->toArray());
-    }
 }
