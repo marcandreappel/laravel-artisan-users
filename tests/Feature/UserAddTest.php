@@ -6,7 +6,7 @@ namespace MarcAndreAppel\ArtisanUsers\Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
 use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
-use MarcAndreAppel\ArtisanUsers\Tests\Fake\User;
+use MarcAndreAppel\ArtisanUsers\Tests\App\User;
 use MarcAndreAppel\ArtisanUsers\Tests\TestCase;
 
 class UserAddTest extends TestCase

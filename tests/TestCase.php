@@ -27,6 +27,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->faker = Faker::create();
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
     }
 
     /**
