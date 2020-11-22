@@ -20,6 +20,16 @@ class UserAddTest extends TestCase
 
     use RefreshDatabase;
 
+    /**
+     * Test setup.
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Config::set('artisan_users.use_model', User::class);
+    }
+
     /** @test */
     public function creates_standard_user_account()
     {
@@ -28,8 +38,6 @@ class UserAddTest extends TestCase
             'email'    => $this->faker->email,
             'password' => $this->faker->password,
         ];
-
-        Config::set('artisan_users.use_model', User::class);
 
         $this->artisan('user:add')
             ->expectsQuestion('Email address', $presets['email'])
@@ -49,8 +57,6 @@ class UserAddTest extends TestCase
             'email'    => $this->faker->email,
             'password' => $this->faker->password,
         ]);
-
-        Config::set('artisan_users.use_model', User::class);
 
         ArtisanUsers::createUser($values);
 

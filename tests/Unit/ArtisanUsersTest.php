@@ -21,6 +21,13 @@ class ArtisanUsersTest extends TestCase
 
     use RefreshDatabase;
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        Config::set('artisan_users.use_model', User::class);
+    }
+
     /**
      * @test
      */
@@ -31,8 +38,6 @@ class ArtisanUsersTest extends TestCase
             'email'    => $this->faker->email,
             'password' => $this->faker->password,
         ]);
-
-        Config::set('artisan_users.use_model', User::class);
 
         $user = ArtisanUsers::createUser($presets);
 
@@ -71,8 +76,6 @@ class ArtisanUsersTest extends TestCase
             'password' => $this->faker->password,
         ]);
 
-        Config::set('artisan_users.use_model', User::class);
-
         ArtisanUsers::createUser($presets);
 
         $result = ArtisanUsers::createUser($presets);
@@ -96,9 +99,81 @@ class ArtisanUsersTest extends TestCase
         ]);
         $user = DB::table('users')->where('id', '=', 1)->first();
 
-        Config::set('artisan_users.use_model', User::class);
-
         $this->assertTrue(ArtisanUsers::userExists($user->email));
         $this->assertFalse(ArtisanUsers::userExists($this->faker->email));
+    }
+
+    /** @test */
+    public function updates_users_email()
+    {
+        $email = $this->faker->email;
+        $newEmail = $this->faker->email;
+
+        $now = Carbon::now();
+        DB::table('users')->insert([
+            'name'       => $this->faker->name,
+            'email'      => $email,
+            'password'   => Hash::make($this->faker->password),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $user = ArtisanUsers::updateUser($email);
+        $this->assertInstanceOf(\MarcAndreAppel\ArtisanUsers\ArtisanUsers::class, $user);
+
+        $user->setEmail($newEmail);
+        $data = DB::table('users')->where('id', '=', 1)->first();
+
+        $this->assertEquals($data->email, $newEmail);
+    }
+
+    /** @test */
+    public function updates_users_name()
+    {
+        $email = $this->faker->email;
+        $newName = $this->faker->name;
+
+        $now = Carbon::now();
+        DB::table('users')->insert([
+            'name'       => $this->faker->name,
+            'email'      => $email,
+            'password'   => Hash::make($this->faker->password),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $user = ArtisanUsers::updateUser($email);
+
+        $user->setName($newName);
+        $data = DB::table('users')->where('id', '=', 1)->first();
+
+        $this->assertEquals($data->name, $newName);
+    }
+
+    /** @test  */
+    public function updates_users_password()
+    {
+        $email = $this->faker->email;
+        $oldPassword = Hash::make($this->faker->password);
+        $newPassword = $this->faker->password;
+
+        $now = Carbon::now();
+        DB::table('users')->insert([
+            'name'       => $this->faker->name,
+            'email'      => $email,
+            'password'   => $oldPassword,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $data = DB::table('users')->where('id', '=', 1)->first();
+        $this->assertEquals($oldPassword, $data->password);
+
+        $user = ArtisanUsers::updateUser($email);
+
+        $user->setPassword($newPassword);
+        $data = DB::table('users')->where('id', '=', 1)->first();
+
+        $this->assertNotEquals($data->password, $oldPassword);
     }
 }
