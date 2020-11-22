@@ -17,7 +17,7 @@ class UserAddTest extends TestCase
     /** @test */
     public function creates_standard_user_account()
     {
-        $this->migrateFreshUsing();
+        $this->migrateUsing();
 
         $presets = [
             'name'     => $this->faker->name,
@@ -37,39 +37,13 @@ class UserAddTest extends TestCase
     }
 
     /** @test */
-    public function creates_role_based_user_account()
-    {
-        $this->migrateFreshUsing();
-
-        $presets = [
-            'name'     => $this->faker->name,
-            'email'    => $this->faker->email,
-            'role'     => 'admin',
-            'password' => $this->faker->password,
-        ];
-
-        Config::set('artisan_users.use_model', User::class);
-        Config::set('artisan_users.with_roles', true);
-
-        $this->artisan('user:add --role')
-            ->expectsQuestion('First and last name', $presets['name'])
-            ->expectsQuestion('Email address', $presets['email'])
-            ->expectsQuestion('Password', $presets['password'])
-            ->expectsChoice('Role', $presets['role'], ['user', "Standard User", 'admin', "Administrator"])
-            ->assertExitCode(0);
-
-        $this->assertDatabaseHas('users', ['email' => $presets['email']]);
-    }
-
-    /** @test */
     public function returns_error_message_when_wrong_data()
     {
-        $this->migrateFreshUsing();
+        $this->migrateUsing();
 
         $values = collect([
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,
-            'role'     => 'admin',
             'password' => $this->faker->password,
         ]);
 
@@ -86,27 +60,4 @@ class UserAddTest extends TestCase
             ->expectsOutput("User creation has failed");
     }
 
-    /** @test */
-    public function adds_default_role_when_roles_active_but_not_asked()
-    {
-        $this->migrateFreshUsing();
-
-        $presets = [
-            'name'     => $this->faker->name,
-            'email'    => $this->faker->email,
-            'role'     => 'user',
-            'password' => $this->faker->password,
-        ];
-
-        Config::set('artisan_users.use_model', User::class);
-        Config::set('artisan_users.with_roles', true);
-
-        $this->artisan('user:add')
-            ->expectsQuestion('First and last name', $presets['name'])
-            ->expectsQuestion('Email address', $presets['email'])
-            ->expectsQuestion('Password', $presets['password'])
-            ->assertExitCode(0);
-
-        $this->assertDatabaseHas('users', ['email' => $presets['email'], 'role' => $presets['role']]);
-    }
 }
