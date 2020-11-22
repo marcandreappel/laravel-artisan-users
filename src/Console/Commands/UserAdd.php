@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MarcAndreAppel\ArtisanUsers\Console\Commands;
 
 use Illuminate\Console\Command;
-use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
+use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
 
 /**
  * Class UserAdd.

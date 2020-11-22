@@ -50,7 +50,9 @@
             "providers": [
                 "MarcAndreAppel\\ArtisanUsers\\ArtisanUsersServiceProvider"
             ],
-            "aliases": []
+            "aliases": {
+                "ArtisanUsers": "MarcAndreAppel\\ArtisanUsers\\Facades\\ArtisanUsers"
+            }
         }
     }
 }
