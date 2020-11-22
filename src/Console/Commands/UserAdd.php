@@ -8,7 +8,9 @@ use Illuminate\Console\Command;
 use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
 
 /**
- * Class UserAdd.
+ * Class UserAdd
+ * 
+ * @package MarcAndreAppel\ArtisanUsers\Console\Commands
  */
 class UserAdd extends Command
 {
