@@ -43,10 +43,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * @param  Application  $app
      */
-    public function getEnvironmentSetUp($app)
-    {
-        include_once __DIR__ . '/Database/create_users_table.php';
-
-        (new \CreateUsersTable)->up();
-    }
+//    public function getEnvironmentSetUp($app)
+//    {
+//        include_once __DIR__.'/database/migrations/0000_00_00_000000_create_users_table.php';
+//
+//        (new \CreateUsersTable)->up();
+//    }
 }
