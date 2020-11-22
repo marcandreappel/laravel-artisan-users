@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace MarcAndreAppel\ArtisanUsers;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Config;
-use MarcAndreAppel\ArtisanUsers\Tests\Fake\User;
+use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
+use MarcAndreAppel\ArtisanUsers\Tests\App\User;
 use MarcAndreAppel\ArtisanUsers\Tests\TestCase;
 
 class ArtisanUsersTest extends TestCase
@@ -18,7 +17,7 @@ class ArtisanUsersTest extends TestCase
      */
     public function create_user()
     {
-        $this->migrateFreshUsing();
+        $this->migrateUsing();
 
         $presets = collect([
             'name'     => $this->faker->name,

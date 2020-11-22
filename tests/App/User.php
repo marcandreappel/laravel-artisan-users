@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MarcAndreAppel\ArtisanUsers\Tests\Fake;
+namespace MarcAndreAppel\ArtisanUsers\Tests\App;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

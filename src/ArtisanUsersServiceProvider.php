@@ -19,7 +19,7 @@ class ArtisanUsersServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
-            $this->publishes([__DIR__ . '/../config/artisan_users.php' => config_path('artisan_users.php')], 'config');
+            $this->publishes([__DIR__.'/../config/artisan_users.php' => config_path('artisan_users.php')], 'config');
         }
     }
 
@@ -28,7 +28,7 @@ class ArtisanUsersServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/artisan_users.php', 'artisan_users');
+        $this->mergeConfigFrom(__DIR__.'/../config/artisan_users.php', 'artisan_users');
 
         if ($this->app->runningInConsole()) {
             $this->commands([UserAdd::class]);
