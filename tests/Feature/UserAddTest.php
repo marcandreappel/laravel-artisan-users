@@ -23,8 +23,6 @@ class UserAddTest extends TestCase
     /** @test */
     public function creates_standard_user_account()
     {
-        $this->migrateUsing();
-
         $presets = [
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,

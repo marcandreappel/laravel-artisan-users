@@ -26,8 +26,6 @@ class ArtisanUsersTest extends TestCase
      */
     public function create_user()
     {
-        $this->migrateUsing();
-
         $presets = collect([
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,

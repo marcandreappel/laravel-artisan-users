@@ -1,23 +1,26 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MarcAndreAppel\ArtisanUsers\Tests;
 
 use Faker\Factory as Faker;
+use Faker\Generator;
 use Illuminate\Foundation\Application;
 use MarcAndreAppel\ArtisanUsers\ArtisanUsersServiceProvider;
 
 /**
  * Class TestCase
+ *
  * @package MarcAndreAppel\ArtisanUsers\Tests
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
 
     /**
-     * @var \Faker\Generator $faker
+     * @var Generator $faker
      */
-    public \Faker\Generator $faker;
+    public Generator $faker;
 
     /**
      * Setting up the environnement.
@@ -27,7 +30,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
 
         $this->faker = Faker::create();
-        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
     }
 
     /**
@@ -40,13 +43,4 @@ class TestCase extends \Orchestra\Testbench\TestCase
         return [ArtisanUsersServiceProvider::class];
     }
 
-    /**
-     * @param  Application  $app
-     */
-//    public function getEnvironmentSetUp($app)
-//    {
-//        include_once __DIR__.'/database/migrations/0000_00_00_000000_create_users_table.php';
-//
-//        (new \CreateUsersTable)->up();
-//    }
 }
