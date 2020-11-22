@@ -30,6 +30,10 @@ class ArtisanUsersServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/artisan_users.php', 'artisan_users');
 
+        $this->app->bind('artisan_users', function () {
+            return new ArtisanUsers();
+        });
+
         if ($this->app->runningInConsole()) {
             $this->commands([UserAdd::class]);
         }

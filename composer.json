@@ -38,9 +38,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit -c phpunit.xml",
-        "test-coverage": "vendor/bin/phpunit -c phpunit.xml --coverage-html coverage"
-
+        "test": "vendor/bin/phpunit -c phpunit.xml"
     },
     "config": {
         "sort-packages": true
@@ -50,7 +48,9 @@
             "providers": [
                 "MarcAndreAppel\\ArtisanUsers\\ArtisanUsersServiceProvider"
             ],
-            "aliases": []
+            "aliases": {
+                "ArtisanUsers": "MarcAndreAppel\\ArtisanUsers\\Facades\\ArtisanUsers"
+            }
         }
     }
 }
