@@ -25,11 +25,11 @@ class ArtisanUsers
      */
     public function __construct()
     {
-        $this->user  = config('artisan_users.use_model');
+        $this->user = config('artisan_users.use_model');
     }
 
     /**
-     * @param Collection<string> $values
+     * @param  Collection<string>  $values
      *
      * @return bool
      */
@@ -37,7 +37,7 @@ class ArtisanUsers
     {
         /**
          * @var Model $user
-        */
+         */
         $user = new $this->user();
 
         $user->name     = $values->get('name');
