@@ -1,13 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
-namespace MarcAndreAppel\ArtisanUsers;
-
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Config;
-use MarcAndreAppel\ArtisanUsers\Tests\Fake\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
+use MarcAndreAppel\ArtisanUsers\Tests\App\User;
 use MarcAndreAppel\ArtisanUsers\Tests\TestCase;
 
+/**
+ * Class ArtisanUsersTest
+ *
+ * @package MarcAndreAppel\ArtisanUsers\Tests
+ */
 class ArtisanUsersTest extends TestCase
 {
 
@@ -18,8 +26,6 @@ class ArtisanUsersTest extends TestCase
      */
     public function create_user()
     {
-        $this->migrateFreshUsing();
-
         $presets = collect([
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,
@@ -28,9 +34,7 @@ class ArtisanUsersTest extends TestCase
 
         Config::set('artisan_users.use_model', User::class);
 
-        $artisanUser = new ArtisanUsers;
-
-        $user = $artisanUser->createUser($presets);
+        $user = ArtisanUsers::createUser($presets);
 
         $this->assertTrue($user);
         $this->assertDatabaseHas('users', ['email' => $presets['email']]);
@@ -43,7 +47,7 @@ class ArtisanUsersTest extends TestCase
     {
         $this->expectException('ArgumentCountError');
 
-        (new ArtisanUsers)->createUser();
+        ArtisanUsers::createUser();
     }
 
     /**
@@ -53,7 +57,7 @@ class ArtisanUsersTest extends TestCase
     {
         $this->expectException('TypeError');
 
-        (new ArtisanUsers)->createUser(['name' => $this->faker->name]);
+        ArtisanUsers::createUser(['email' => $this->faker->email]);
     }
 
     /**
@@ -61,8 +65,6 @@ class ArtisanUsersTest extends TestCase
      */
     public function returns_false_when_user_exists()
     {
-        $this->migrateFreshUsing();
-
         $presets = collect([
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,
@@ -71,34 +73,32 @@ class ArtisanUsersTest extends TestCase
 
         Config::set('artisan_users.use_model', User::class);
 
-        (new ArtisanUsers)->createUser($presets);
+        ArtisanUsers::createUser($presets);
 
-
-        $result = (new ArtisanUsers)->createUser($presets);
+        $result = ArtisanUsers::createUser($presets);
         $this->assertFalse($result);
     }
 
     /**
      * @test
      */
-    public function adds_user_with_role()
+    public function it_can_verify_if_email_exists()
     {
-        $this->migrateFreshUsing();
+        $email = $this->faker->email;
+
+        $now = Carbon::now();
+        DB::table('users')->insert([
+            'name'       => $this->faker->name,
+            'email'      => $email,
+            'password'   => Hash::make($this->faker->password),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        $user = DB::table('users')->where('id', '=', 1)->first();
 
         Config::set('artisan_users.use_model', User::class);
-        Config::set('artisan_users.with_roles', true);
 
-        $values = collect([
-            'name'     => $this->faker->name,
-            'email'    => $this->faker->email,
-            'role'     => 'admin',
-            'password' => $this->faker->password,
-        ]);
-
-
-        $user = (new ArtisanUsers)->createUser($values);
-
-        $this->assertTrue($user);
-        $this->assertDatabaseHas('users', $values->except('password')->toArray());
+        $this->assertTrue(ArtisanUsers::userExists($user->email));
+        $this->assertFalse(ArtisanUsers::userExists($this->faker->email));
     }
 }

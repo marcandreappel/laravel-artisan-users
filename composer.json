@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.4|^8.0",
         "illuminate/support": "^8.14"
     },
     "require-dev": {
@@ -38,9 +38,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit -c phpunit.xml",
-        "test-coverage": "vendor/bin/phpunit -c phpunit.xml --coverage-html coverage"
-
+        "test": "vendor/bin/phpunit -c phpunit.xml"
     },
     "config": {
         "sort-packages": true
@@ -50,7 +48,9 @@
             "providers": [
                 "MarcAndreAppel\\ArtisanUsers\\ArtisanUsersServiceProvider"
             ],
-            "aliases": []
+            "aliases": {
+                "ArtisanUsers": "MarcAndreAppel\\ArtisanUsers\\Facades\\ArtisanUsers"
+            }
         }
     }
 }

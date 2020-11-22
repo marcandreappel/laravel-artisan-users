@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace MarcAndreAppel\ArtisanUsers\Console\Commands;
 
 use Illuminate\Console\Command;
-use MarcAndreAppel\ArtisanUsers\ArtisanUsers;
+use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
 
 /**
  * Class UserAdd.
@@ -14,55 +14,29 @@ class UserAdd extends Command
 {
 
     /** @var string */
-    protected $signature = 'user:add
-                            {--r|role : Whether a role needs to defined}';
+    protected $signature = 'user:add';
 
     /** @var string */
     protected $description = "Create a new user";
 
-    /** @var bool $withRoles */
-    private bool $withRoles;
-
-    /** @return void */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->withRoles = config('artisan_users.with_roles');
-    }
-
     /** @return mixed */
     public function handle()
     {
-        $values = collect(
-            [
-            'name'     => $this->ask("First and last name"),
-            'email'    => $this->ask("Email address"),
-            'password' => $this->secret("Password"),
-            ]
-        );
-        if ($this->withRoles) {
-            $values->put('role', 'user');
-        }
+        $email = $this->ask("Email address");
 
-        if ($this->option('role') && $this->withRoles) {
-                $values->put(
-                    'role',
-                    $this->choice(
-                        "Role",
-                        [
-                            'user'  => "Standard User",
-                            'admin' => "Administrator",
-                        ],
-                        'user'
-                    )
-                );
-            }
-
-        if ((new ArtisanUsers())->createUser($values)) {
-            $this->info("User was successfully created");
+        if (ArtisanUsers::userExists($email)) {
+            $this->warn("User exists. Use <info>'artisan user:edit'</info> instead.");
         } else {
-            $this->error("User creation has failed");
+            $values = collect(
+                [
+                    'email'    => $email,
+                    'name'     => $this->ask("First and last name"),
+                    'password' => $this->secret("Password"),
+                ]
+            );
+            ArtisanUsers::createUser($values);
+
+            $this->info("User was successfully created.");
         }
     }
 }

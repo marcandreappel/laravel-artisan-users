@@ -16,11 +16,6 @@ class ArtisanUsers
 {
 
     /**
-     * @var bool $roles
-     */
-    private bool $roles;
-
-    /**
      * @var string $user
      */
     private string $user;
@@ -30,12 +25,11 @@ class ArtisanUsers
      */
     public function __construct()
     {
-        $this->roles = config('artisan_users.with_roles');
-        $this->user  = config('artisan_users.use_model');
+        $this->user = config('artisan_users.use_model');
     }
 
     /**
-     * @param Collection<string> $values
+     * @param  Collection<string>  $values
      *
      * @return bool
      */
@@ -43,16 +37,12 @@ class ArtisanUsers
     {
         /**
          * @var Model $user
-        */
+         */
         $user = new $this->user();
 
         $user->name     = $values->get('name');
         $user->email    = $values->get('email');
         $user->password = Hash::make($values->get('password'));
-
-        if ($this->roles) {
-            $user->role = $values->get('role', 'user');
-        }
 
         try {
             return $user->save();
@@ -60,4 +50,23 @@ class ArtisanUsers
             return false;
         }
     }
+
+    /**
+     * Verify the existence of a record with the given email address
+     *
+     * @param  string  $email
+     *
+     * @return bool
+     */
+    public function userExists(string $email): bool
+    {
+        try {
+            $this->user::where('email', $email)->firstOrFail();
+
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
+    }
+
 }
