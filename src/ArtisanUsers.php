@@ -50,4 +50,23 @@ class ArtisanUsers
             return false;
         }
     }
+
+    /**
+     * Verify the existence of a record with the given email address
+     *
+     * @param  string  $email
+     *
+     * @return bool
+     */
+    public function userExists(string $email): bool
+    {
+        try {
+            $this->user::where('email', $email)->firstOrFail();
+
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
+    }
+
 }

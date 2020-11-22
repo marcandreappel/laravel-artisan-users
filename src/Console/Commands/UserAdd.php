@@ -22,18 +22,21 @@ class UserAdd extends Command
     /** @return mixed */
     public function handle()
     {
-        $values = collect(
-            [
-            'name'     => $this->ask("First and last name"),
-            'email'    => $this->ask("Email address"),
-            'password' => $this->secret("Password"),
-            ]
-        );
+        $email = $this->ask("Email address");
 
-        if ((new ArtisanUsers())->createUser($values)) {
-            $this->info("User was successfully created");
+        if (ArtisanUsers::userExists($email)) {
+            $this->warn("User exists. Use <info>'artisan user:edit'</info> instead.");
         } else {
-            $this->error("User creation has failed");
+            $values = collect(
+                [
+                    'email'    => $email,
+                    'name'     => $this->ask("First and last name"),
+                    'password' => $this->secret("Password"),
+                ]
+            );
+            ArtisanUsers::createUser($values);
+
+            $this->info("User was successfully created.");
         }
     }
 }

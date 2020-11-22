@@ -81,4 +81,26 @@ class ArtisanUsersTest extends TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @test
+     */
+    public function it_can_verify_if_email_exists()
+    {
+        $email = $this->faker->email;
+
+        $now = Carbon::now();
+        DB::table('users')->insert([
+            'name'       => $this->faker->name,
+            'email'      => $email,
+            'password'   => Hash::make($this->faker->password),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+        $user = DB::table('users')->where('id', '=', 1)->first();
+
+        Config::set('artisan_users.use_model', User::class);
+
+        $this->assertTrue(ArtisanUsers::userExists($user->email));
+        $this->assertFalse(ArtisanUsers::userExists($this->faker->email));
+    }
 }

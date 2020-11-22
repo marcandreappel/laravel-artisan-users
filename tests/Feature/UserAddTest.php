@@ -34,19 +34,18 @@ class UserAddTest extends TestCase
         Config::set('artisan_users.use_model', User::class);
 
         $this->artisan('user:add')
-            ->expectsQuestion('First and last name', $presets['name'])
             ->expectsQuestion('Email address', $presets['email'])
+            ->expectsQuestion('First and last name', $presets['name'])
             ->expectsQuestion('Password', $presets['password'])
+            ->expectsOutput("User was successfully created.")
             ->assertExitCode(0);
 
         $this->assertDatabaseHas('users', ['email' => $presets['email']],);
     }
 
     /** @test */
-    public function returns_error_message_when_wrong_data()
+    public function asks_for_email_first_and_verifies_existence_of_account()
     {
-        $this->migrateUsing();
-
         $values = collect([
             'name'     => $this->faker->name,
             'email'    => $this->faker->email,
@@ -57,13 +56,8 @@ class UserAddTest extends TestCase
 
         ArtisanUsers::createUser($values);
 
-        $this->assertDatabaseHas('users', ['email' => $values->get('email')]);
-
         $this->artisan('user:add')
-            ->expectsQuestion('First and last name', $values->get('name'))
             ->expectsQuestion('Email address', $values->get('email'))
-            ->expectsQuestion('Password', $values->get('password'))
-            ->expectsOutput("User creation has failed");
+            ->expectsOutput("User exists. Use 'artisan user:edit' instead.");
     }
-
 }
