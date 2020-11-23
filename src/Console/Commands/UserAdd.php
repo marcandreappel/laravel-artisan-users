@@ -9,7 +9,7 @@ use MarcAndreAppel\ArtisanUsers\Facades\ArtisanUsers;
 
 /**
  * Class UserAdd
- * 
+ *
  * @package MarcAndreAppel\ArtisanUsers\Console\Commands
  */
 class UserAdd extends Command

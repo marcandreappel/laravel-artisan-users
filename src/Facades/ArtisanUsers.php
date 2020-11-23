@@ -5,6 +5,11 @@ namespace MarcAndreAppel\ArtisanUsers\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @method static userExists(mixed $email)
+ * @method static createUser(\Illuminate\Support\Collection $values)
+ * @method static updateUser(mixed $email)
+ */
 class ArtisanUsers extends Facade
 {
 
