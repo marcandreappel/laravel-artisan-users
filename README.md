@@ -31,12 +31,11 @@ Then you're good to go for the first command, just answer the questions:
 artisan user:add
 ```
 
-### Roles
+Else you can edit an user:
 
-The role system is very opinionated and rudimentary. To use it add a migration against your users table and add the `string` type column `role`. Then set the config fir `with_roles` to true.
-
-You can then trigger the roles question with the `--role` or `-t` flag after the command.
-
+```sh
+artisan user:edit
+```
 
 ### Testing
 
@@ -45,10 +44,6 @@ The test can be run with:
 ```bash
 composer test
 ```
-
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
 ## Contributing
 
