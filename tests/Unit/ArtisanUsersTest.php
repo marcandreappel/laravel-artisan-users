@@ -25,7 +25,7 @@ class ArtisanUsersTest extends TestCase
     {
         parent::setUp();
 
-        Config::set('artisan_users.use_model', User::class);
+        Config::set('artisan-users.use-model', User::class);
     }
 
     /**

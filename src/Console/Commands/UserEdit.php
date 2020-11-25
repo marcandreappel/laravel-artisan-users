@@ -20,17 +20,6 @@ class UserEdit extends Command
     /** @var string */
     protected $description = "Edit a user";
 
-    /** @var bool $withRoles */
-    private bool $withRoles;
-
-    /** @return void */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->withRoles = config('artisan_users.with_roles');
-    }
-
     /** @return mixed */
     public function handle()
     {

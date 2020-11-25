@@ -28,7 +28,7 @@ class ArtisanUsers
      */
     public function __construct()
     {
-        $this->model = config('artisan_users.use_model');
+        $this->model = config('artisan-users.use-model');
     }
 
     /**
