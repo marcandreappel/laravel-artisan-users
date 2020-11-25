@@ -37,7 +37,7 @@ class UserEditTest extends TestCase
 
         $this->user = DB::table('users')->where('id', '=', 1)->first();
 
-        Config::set('artisan_users.use_model', User::class);
+        Config::set('artisan-users.use-model', User::class);
 
     }
 
